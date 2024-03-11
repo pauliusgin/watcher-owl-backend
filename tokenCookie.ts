@@ -11,11 +11,13 @@ async function tokenCookie() {
 			console.log("Response error:", response.status);
 		}
 
-		const cookie = setCookie
-			.replaceAll(",", ";")
-			.split(";")
-			.find((string) => string.includes(cookieName));
-		return cookie;
+		if (setCookie) {
+			const cookie = setCookie
+				.replaceAll(",", ";")
+				.split(";")
+				.find((string) => string.includes(cookieName));
+			return cookie;
+		}
 	} catch (error) {
 		console.log("Error:", error);
 	}

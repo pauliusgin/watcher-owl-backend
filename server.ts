@@ -15,15 +15,16 @@ const corsOptions = {
 	optionsSuccessStatus: 200,
 };
 
-app.get("/proxy", (req, res) => {
+app.get("/proxy", (_, res) => {
 	res.send("this is a indeed proxy port");
 });
 
 app.post("/proxy", cors(corsOptions), async (request, response) => {
 	const searchQuery = request.body;
-	const result = await eshopWatcher(searchQuery);
+	const fullData = await eshopWatcher(searchQuery);
+	const items = fullData.items;
 
-	response.send(JSON.stringify(result));
+	response.send(JSON.stringify(items));
 });
 
 app.listen(PORT, () => {

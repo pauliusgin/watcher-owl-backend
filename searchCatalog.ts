@@ -1,9 +1,7 @@
 const eshop = "https://www.vinted.lt";
 const catalog = "/api/v2/catalog/items?page=1&per_page=96&search_text=";
 
-// cookie is a string
-// searchQuery is an array of words
-async function searchCatalog(cookie, searchQuery) {
+async function searchCatalog(cookie: string, searchQuery: string[]) {
 	try {
 		const queryString = searchQuery.join("+");
 		const fullUrl = `${eshop}${catalog}${queryString}`;
@@ -19,8 +17,9 @@ async function searchCatalog(cookie, searchQuery) {
 		}
 		const result = await response.json();
 
-		// full objects for reference
+		//* full objects for reference
 		// console.log(result);
+		// console.log(JSON.stringify(result));
 		return result;
 	} catch (error) {
 		console.log("Error:", error);
