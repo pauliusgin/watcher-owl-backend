@@ -1,24 +1,19 @@
 {
+	"$schema": "https://json.schemastore.org/tsconfig",
+	"display": "Node 20",
+	"_version": "20.1.0",
+
 	"compilerOptions": {
-		"target": "ES2021",
-		"useDefineForClassFields": true,
-		"lib": ["ES2023", "DOM", "DOM.Iterable"],
-		"module": "ESNext",
-		"skipLibCheck": true,
 		"outDir": "./dist",
+		"rootDir": "./",
+		"lib": ["es2023"],
+		"module": "node16",
+		"target": "es2022",
 
-		/* Bundler mode */
-		"moduleResolution": "bundler",
-		"allowImportingTsExtensions": true,
-		"resolveJsonModule": true,
-		"isolatedModules": true,
-		"noEmit": true,
-		"jsx": "react-jsx",
-
-		/* Linting */
 		"strict": true,
-		"noUnusedLocals": true,
-		"noUnusedParameters": true,
-		"noFallthroughCasesInSwitch": true
+		"esModuleInterop": true,
+		"skipLibCheck": true,
+		"forceConsistentCasingInFileNames": true,
+		"moduleResolution": "node16"
 	}
 }
