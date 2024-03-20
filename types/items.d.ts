@@ -17,3 +17,5 @@ type TypeItem = {
 type FullDataType = {
 	items: TypeItem[];
 };
+
+type originType = string | string[] | undefined;

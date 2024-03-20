@@ -1,6 +1,5 @@
 import { Router } from "express";
-
-import { eshopWatcher } from "../eshopWatcher.js";
+import { vintedCatalogController } from "../controllers/vintedCatalogController.js";
 import { handleIncomingData } from "../helpers/handleIncomingDataHelper.js";
 
 const proxyRouter = Router();
@@ -9,7 +8,9 @@ const proxyRouter = Router();
 proxyRouter.post("/", async (request, response) => {
 	try {
 		const searchQuery = request.body;
-		const fullData = (await eshopWatcher(searchQuery)) as FullDataType;
+		const fullData = (await vintedCatalogController(
+			searchQuery
+		)) as FullDataType;
 
 		const items = handleIncomingData(fullData);
 

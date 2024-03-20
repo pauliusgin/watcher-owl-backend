@@ -1,9 +1,11 @@
 import cors from "cors";
 
-export function corsMiddleware(allowedURLs: string[]) {
-	const corsOptions = {
-		origin: allowedURLs,
-		optionSuccessStatus: 200,
-	};
+export function corsMiddleware(allowedOrigins: originType) {
+	const corsOptions = allowedOrigins
+		? {
+				origin: allowedOrigins,
+				optionSuccessStatus: 200,
+			}
+		: {};
 	return cors(corsOptions);
 }
