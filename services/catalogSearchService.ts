@@ -1,13 +1,15 @@
-const eshop = "https://www.vinted.lt";
-const catalog = "/api/v2/catalog/items?page=1&per_page=96&search_text=";
-
-async function searchCatalog(cookie: string, searchQuery: string[]) {
+async function catalogSearchService(
+	catalog: string,
+	authCookie: string,
+	searchQuery: string[]
+) {
 	try {
 		const queryString = searchQuery.join("+");
-		const fullUrl = `${eshop}${catalog}${queryString}`;
+		const fullUrl = `${catalog}${queryString}`;
+
 		const response = await fetch(fullUrl, {
 			headers: {
-				cookie: cookie,
+				cookie: authCookie,
 			},
 		});
 
@@ -26,4 +28,4 @@ async function searchCatalog(cookie: string, searchQuery: string[]) {
 	}
 }
 
-export { searchCatalog };
+export { catalogSearchService };
