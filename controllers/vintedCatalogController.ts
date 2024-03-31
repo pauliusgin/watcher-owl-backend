@@ -1,6 +1,7 @@
 import { cookieService } from "../services/cookieService.js";
 import { catalogSearchService } from "../services/catalogSearchService.js";
 
+// POST /proxy
 async function vintedCatalogController(searchQuery: string[]) {
 	const vinted = "https://www.vinted.lt";
 	const vintedCatalog =

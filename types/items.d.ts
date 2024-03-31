@@ -1,12 +1,12 @@
-type TypeUrl = {
+type urlType = {
 	url: string;
 };
 
-type TypeItem = {
+type vintedItemType = {
 	id?: number;
 	title: string;
 	photo: {
-		thumbnails: TypeUrl[];
+		thumbnails: urlType[];
 	};
 	price: number;
 	currency?: string;
@@ -14,8 +14,8 @@ type TypeItem = {
 	url?: string;
 };
 
-type FullDataType = {
-	items: TypeItem[];
+type vintedFullDataType = {
+	items: vintedItemType[];
 };
 
 type originType = string | string[] | undefined;
