@@ -1,5 +1,6 @@
 import express from "express";
 import { corsMiddleware } from "./middleware/corsMiddleware.js";
+import { rateLimiterMiddleware } from "./middleware/rateLimiterMiddleware.js";
 
 import { proxyRouter } from "./routes/proxy.routes.js";
 import { historyRouter } from "./routes/history.routes.js";
@@ -9,6 +10,8 @@ const app = express();
 const allowedOrigins: originType = "http://localhost:1337";
 
 app.use(corsMiddleware(allowedOrigins));
+app.use("/api", rateLimiterMiddleware);
+
 app.use(express.json());
 
 app.use("/api", proxyRouter);

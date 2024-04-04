@@ -1,6 +1,6 @@
 import cors from "cors";
 
-export function corsMiddleware(allowedOrigins: originType) {
+function corsMiddleware(allowedOrigins: originType) {
 	const corsOptions = allowedOrigins
 		? {
 				origin: allowedOrigins,
@@ -9,3 +9,5 @@ export function corsMiddleware(allowedOrigins: originType) {
 		: {};
 	return cors(corsOptions);
 }
+
+export { corsMiddleware };
