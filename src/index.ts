@@ -7,7 +7,7 @@ import { historyRouter } from "./routes/history.routes.js";
 import { loginRouter } from "./routes/login.routes.js";
 
 const app = express();
-const allowedOrigins: originType = "http://localhost:1337";
+const allowedOrigins: originType = "https://watcher-owl.vercel.app/";
 
 app.use(corsMiddleware(allowedOrigins));
 app.use("/api", rateLimiterMiddleware);

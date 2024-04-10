@@ -6,7 +6,7 @@
 	"type": "module",
 	"scripts": {
 		"watch": "tsc --watch",
-		"dev": "npx tsx watch src/server.ts",
+		"dev": "tsx watch src/server.ts",
 		"build": "rm -rf ./dist && tsc",
 		"start": "npm run build && node dist/src/server.js"
 	},
