@@ -11,5 +11,12 @@
 			"src": "/(.*)",
 			"dest": "/src/server.ts"
 		}
+	],
+	"source": "/watcher-owl-backend.vercel.app/(.*)",
+	"headers": [
+		{
+			"key": "Access-Control-Allow-Origin",
+			"value": "https://watcher-owl.vercel.app/"
+		}
 	]
 }
