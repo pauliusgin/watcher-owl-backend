@@ -1,6 +1,6 @@
 import express from "express";
 import cors from "cors";
-// import { corsMiddleware } from "./middleware/corsMiddleware.js";
+import { corsMiddleware } from "./middleware/corsMiddleware.js";
 import { rateLimiterMiddleware } from "./middleware/rateLimiterMiddleware.js";
 
 import { proxyRouter } from "./routes/proxy.routes.js";
@@ -14,15 +14,15 @@ const allowedOrigins: originType = [
 	"http://localhost:1337",
 ];
 
-app.use(
-	cors({
-		origin: allowedOrigins,
-		methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-		allowedHeaders: ["Content-Type", "Authorization"],
-		// credentials: true,
-	})
-);
-// app.use(corsMiddleware(allowedOrigins));
+// app.use(
+// 	cors({
+// 		origin: allowedOrigins,
+// 		methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+// 		allowedHeaders: ["Content-Type", "Authorization"],
+// credentials: true,
+// })
+// );
+app.use(corsMiddleware(allowedOrigins));
 // app.use(cors());
 // app.options("*", cors());
 
