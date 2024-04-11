@@ -6,10 +6,10 @@
 			"use": "@vercel/node"
 		}
 	],
-
-	"headers": [
+	"routes": [
 		{
-			"source": "/api/(.*)",
+			"src": "/(.*)",
+			"dest": "/src/server.ts",
 			"headers": [
 				{ "key": "Access-Control-Allow-Credentials", "value": "true" },
 				{ "key": "Access-Control-Allow-Origin", "value": "*" },
