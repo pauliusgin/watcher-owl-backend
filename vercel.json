@@ -14,7 +14,7 @@
 	],
 	"headers": [
 		{
-			"source": "https://watcher-owl-backend.vercel.app/api/(.*)",
+			"source": "/api/(.*)",
 			"headers": [
 				{ "key": "Access-Control-Allow-Credentials", "value": "true" },
 				{
