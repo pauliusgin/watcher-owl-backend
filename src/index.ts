@@ -34,4 +34,8 @@ app.use("/api", proxyRouter);
 app.use("/api", historyRouter);
 app.use("/api", loginRouter);
 
+app.get("/api/proxy", (_, res) => {
+	res.send("Veikia serveris");
+});
+
 export { app };
