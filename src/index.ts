@@ -10,7 +10,7 @@ import { loginRouter } from "./routes/login.routes.js";
 const app = express();
 
 const allowedOrigins: originType = [
-	"https://watcher-owl.vercel.app/",
+	"https://watcher-owl.vercel.app",
 	"http://localhost:1337",
 ];
 
