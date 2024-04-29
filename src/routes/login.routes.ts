@@ -1,9 +1,10 @@
 import { Router } from "express";
 
-const loginRouter = Router();
+const login = Router();
 
-loginRouter.get("/login", async (_, res) => {
-	console.log("login route");
+login.post("/login/google", async (req, res) => {
+	// console.log("Atėjo:", req.body);
+	res.json("Hello from backend...");
 });
 
-export { loginRouter };
+export { login };

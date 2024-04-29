@@ -1,10 +1,10 @@
 import { Router } from "express";
-import { vintedCatalogController } from "../controllers/vintedCatalogController.js";
-import { handleIncomingData } from "../helpers/handleIncomingDataHelper.js";
+import { vintedCatalogController } from "../controllers/vintedCatalog.controller.js";
+import { handleIncomingData } from "../helpers/handleIncomingData.helper.js";
 
-const proxyRouter = Router();
+const proxy = Router();
 
-proxyRouter.post("/proxy", async (req, res) => {
+proxy.post("/proxy", async (req, res) => {
 	try {
 		const searchQuery = req.body;
 		const fullData = (await vintedCatalogController(
@@ -22,4 +22,4 @@ proxyRouter.post("/proxy", async (req, res) => {
 	}
 });
 
-export { proxyRouter };
+export { proxy };

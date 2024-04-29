@@ -1,41 +1,23 @@
 import express from "express";
-import cors from "cors";
-import { corsMiddleware } from "./middleware/corsMiddleware.js";
-import { rateLimiterMiddleware } from "./middleware/rateLimiterMiddleware.js";
+import { handleCors } from "./middleware/cors.middleware.js";
+import { rateLimiter } from "./middleware/rateLimiter.middleware.js";
 
-import { proxyRouter } from "./routes/proxy.routes.js";
-import { historyRouter } from "./routes/history.routes.js";
-import { loginRouter } from "./routes/login.routes.js";
+import { healthCheck } from "./routes/healthCheck.routes.js";
+import { history } from "./routes/history.routes.js";
+import { login } from "./routes/login.routes.js";
+import { proxy } from "./routes/proxy.routes.js";
 
 const app = express();
 
-const allowedOrigins: originType = [
-	"https://watcher-owl.vercel.app",
-	"http://localhost:1337",
-];
-
-// app.use(
-// 	cors({
-// 		origin: allowedOrigins,
-// 		methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-// 		allowedHeaders: ["Content-Type", "Authorization"],
-// credentials: true,
-// })
-// );
-app.use(corsMiddleware(allowedOrigins));
-// app.use(cors());
-// app.options("*", cors());
-
 app.use(express.json());
+app.use(
+	handleCors(["https://watcher-owl.vercel.app", "http://localhost:1337"])
+);
 
-app.use("/api", rateLimiterMiddleware);
-
-app.use("/api", proxyRouter);
-app.use("/api", historyRouter);
-app.use("/api", loginRouter);
-
-app.get("/api/proxy", (_, res) => {
-	res.send("Veikia serveris");
-});
+app.use("/api", rateLimiter);
+app.use("/api", healthCheck);
+app.use("/api", history);
+app.use("/api", login);
+app.use("/api", proxy);
 
 export { app };
