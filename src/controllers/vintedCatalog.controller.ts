@@ -1,5 +1,5 @@
-import { cookieService } from "../services/cookieService.js";
-import { catalogSearchService } from "../services/catalogSearchService.js";
+import { cookieService } from "../services/cookie.service.js";
+import { catalogSearchService } from "../services/catalogSearch.service.js";
 
 // POST /proxy
 async function vintedCatalogController(searchQuery: string[]) {
@@ -17,8 +17,6 @@ async function vintedCatalogController(searchQuery: string[]) {
 				authCookie,
 				searchQuery
 			);
-
-			console.log("Search terms:", searchQuery);
 
 			return result;
 		}

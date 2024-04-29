@@ -1,9 +1,9 @@
 import { Router } from "express";
-import { historyController } from "../controllers/historyController.js";
+import { historyController } from "../controllers/history.controller.js";
 
-const historyRouter = Router();
+const history = Router();
 
-historyRouter.get("/history", async (_, res) => {
+history.get("/history", async (_, res) => {
 	try {
 		const history = await historyController();
 
@@ -16,4 +16,4 @@ historyRouter.get("/history", async (_, res) => {
 	}
 });
 
-export { historyRouter };
+export { history };
