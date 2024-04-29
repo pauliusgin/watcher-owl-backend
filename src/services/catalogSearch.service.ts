@@ -5,7 +5,8 @@ async function catalogSearchService(
 ) {
 	try {
 		const queryString = searchQuery.join("+");
-		const fullUrl = `${catalog}${queryString}&order=newest_first`;
+		const initialOrder = "&order=newest_first";
+		const fullUrl = `${catalog}${queryString}${initialOrder}`;
 
 		const response = await fetch(fullUrl, {
 			headers: {
