@@ -3,6 +3,7 @@ export function handleIncomingData(data: vintedFullDataType) {
 		id: item.id,
 		title: item.title,
 		photo: item.photo.thumbnails[0].url,
+		full_size_url: item.photo.full_size_url,
 		timestamp: item.photo.high_resolution.timestamp,
 		price: Number(item.price),
 		currency: item.currency,

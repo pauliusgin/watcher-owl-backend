@@ -7,6 +7,7 @@ type vintedItemType = {
 	title: string;
 	photo: {
 		thumbnails: urlType[];
+		full_size_url: string;
 		high_resolution: {
 			timestamp: string;
 		};
