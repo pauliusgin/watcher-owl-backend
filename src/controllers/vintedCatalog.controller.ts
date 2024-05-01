@@ -5,7 +5,7 @@ import { catalogSearchService } from "../services/catalogSearch.service.js";
 async function vintedCatalogController(searchQuery: string[]) {
 	const vinted = "https://www.vinted.lt";
 	const vintedCatalog =
-		"https://www.vinted.lt/api/v2/catalog/items?page=1&per_page=96&search_text=";
+		"https://www.vinted.lt/api/v2/catalog/items?page=1&per_page=50&search_text=";
 	const cookie = "_vinted_fr_session";
 
 	try {
