@@ -22,3 +22,10 @@ type vintedFullDataType = {
 };
 
 type originType = string | string[] | undefined;
+
+type userInfoType = {
+	email: string;
+	password?: string;
+	timestamp: number;
+	isLoggedIn?: boolean;
+};
