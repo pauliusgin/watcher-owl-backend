@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { historyController } from "../controllers/history.controller.js";
+import { historyController } from "../controllers/history.controllers.js";
 
 const history = Router();
 
