@@ -1,8 +1,5 @@
 import { Router } from "express";
-import {
-	checkIfUserIsInTheDatabase,
-	addUserToTheDatabase,
-} from "../controllers/users.controller.js";
+import { handleUserInTheDatabase } from "../controllers/users.controller.js";
 
 const users = Router();
 
@@ -16,16 +13,23 @@ users.post("/users", async (req, res) => {
 		timestamp: Date.now(),
 	};
 
-	if (!checkIfUserIsInTheDatabase(userInfo)) {
-		addUserToTheDatabase(userInfo);
-		res.json(
-			`User added with email: ${userInfo.email} and date: ${new Date(
-				userInfo.timestamp
-			)}`
-		);
-	} else {
-		res.json(`User ${userInfo.email} already exists since `);
-	}
+	const handledUser = handleUserInTheDatabase(userInfo);
+	// res.json(
+	// 	`User added with email: ${userInfo.email} and date: ${new Date(
+	// 		userInfo.timestamp
+	// 	)}`
+	// );
+	res.json(`api/users POST response:", ${handledUser}`);
+});
+
+users.patch("/users/:user", (req, res) => {
+	const userUpdate = req.body;
+	res.json(`Received request for update: ${req.body}`);
+});
+
+users.delete("/users/:user", (req, res) => {
+	const userToDelete = req.body;
+	res.json(`Received request to delete this user: ${req.body}`);
 });
 
 export { users };
