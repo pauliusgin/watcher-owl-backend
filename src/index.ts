@@ -6,6 +6,7 @@ import { healthCheck } from "./routes/healthCheck.routes.js";
 import { history } from "./routes/history.routes.js";
 import { login } from "./routes/login.routes.js";
 import { users } from "./routes/users.routes.js";
+import { tasks } from "./routes/tasks.routes.js";
 import { proxy } from "./routes/proxy.routes.js";
 
 const app = express();
@@ -20,6 +21,7 @@ app.use("/api", healthCheck);
 app.use("/api", history);
 app.use("/api", login);
 app.use("/api", users);
+app.use("/api", tasks);
 app.use("/api", proxy);
 
 export { app };
