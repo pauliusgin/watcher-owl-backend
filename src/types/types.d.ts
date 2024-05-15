@@ -29,3 +29,13 @@ type userInDatabaseType = {
 	password?: string;
 	timestamp: number;
 };
+
+type taskType = {
+	userEmail: string;
+	title: string;
+	search: string[];
+	timestamp: Date;
+	isActive: boolean;
+	isFavorite: boolean;
+	notification: "none" | "sms" | "email";
+};

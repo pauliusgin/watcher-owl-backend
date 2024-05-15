@@ -7,12 +7,11 @@ const userSchema = new mongoose.Schema({
 	tasks: [
 		{
 			title: { type: String, required: true, unique: true },
-			query: [{ type: String, required: true }],
-			start: { type: Date, required: true },
-			end: { type: Date, required: true },
+			search: { type: [String], required: true },
+			timestamp: { type: Number, required: true },
 			isActive: { type: Boolean, required: true },
-			notification: { type: Boolean, required: true },
-			isFavorite: { type: Boolean },
+			isFavorite: { type: Boolean, required: true },
+			notification: { type: String, required: true },
 			retrieved_items: [
 				{
 					id: { type: Number, required: true },

@@ -1,8 +1,8 @@
 import { User } from "../models/user.model.js";
 
-async function isUserInDatabase(user: userInDatabaseType) {
+async function findUserInDatabase({ email }: userInDatabaseType) {
 	try {
-		const userIsInDatabase = await User.findOne({ email: user.email });
+		const userIsInDatabase = await User.exists({ email });
 
 		return userIsInDatabase;
 	} catch (error) {
@@ -14,12 +14,12 @@ async function isUserInDatabase(user: userInDatabaseType) {
 
 async function addUserToDatabase(user: userInDatabaseType) {
 	try {
-		const userIsInDatabase = await isUserInDatabase(user);
+		const userIsInDatabase = await findUserInDatabase(user);
 		if (userIsInDatabase) return `User ${user.email} is already registered.`;
 
-		const newUserInTheDatabase = await User.create(user);
+		const newUser = await User.create(user);
 
-		return `User ${newUserInTheDatabase.email} added to database.`;
+		return `User ${newUser.email} added to database.`;
 	} catch (error) {
 		if (error instanceof Error) {
 			console.log(error.message);
@@ -29,7 +29,7 @@ async function addUserToDatabase(user: userInDatabaseType) {
 
 async function deleteUserFromDatabase(user: userInDatabaseType) {
 	try {
-		const userInDatabase = await isUserInDatabase(user);
+		const userInDatabase = await findUserInDatabase(user);
 		if (!userInDatabase) return `User ${user.email} not found.`;
 
 		const deletedUser = await User.deleteOne({
@@ -44,4 +44,4 @@ async function deleteUserFromDatabase(user: userInDatabaseType) {
 	}
 }
 
-export { addUserToDatabase, deleteUserFromDatabase };
+export { findUserInDatabase, addUserToDatabase, deleteUserFromDatabase };

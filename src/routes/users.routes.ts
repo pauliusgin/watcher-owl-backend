@@ -11,9 +11,11 @@ users.get("/users", async (_, res) => {
 });
 
 users.post("/users", async (req, res) => {
+	const { email, password } = req.body;
+
 	const user = {
-		email: req.body.email,
-		password: req.body.password,
+		email,
+		password,
 		timestamp: Date.now(),
 	};
 
@@ -29,6 +31,7 @@ users.patch("/users/:user", async (req, res) => {
 
 users.delete("/users/", async (req, res) => {
 	const user = req.body;
+
 	const deletedUser = await deleteUserFromDatabase(user);
 
 	if (deletedUser) res.json(deletedUser);

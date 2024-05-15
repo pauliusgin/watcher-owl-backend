@@ -1,4 +1,4 @@
-async function catalogSearchService(
+async function searchVintedCatalog(
 	catalog: string,
 	authCookie: string,
 	searchQuery: string[]
@@ -26,4 +26,4 @@ async function catalogSearchService(
 	}
 }
 
-export { catalogSearchService };
+export { searchVintedCatalog };

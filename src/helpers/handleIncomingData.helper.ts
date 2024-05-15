@@ -1,4 +1,4 @@
-export function handleIncomingData(data: vintedFullDataType) {
+function handleVintedData(data: vintedFullDataType) {
 	const items = data.items.map((item: vintedItemType) => ({
 		id: item.id,
 		title: item.title,
@@ -13,3 +13,5 @@ export function handleIncomingData(data: vintedFullDataType) {
 
 	return items;
 }
+
+export { handleVintedData };

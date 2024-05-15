@@ -1,18 +1,15 @@
 import cron from "node-cron";
 
-function firstCronJob(reps: number, delay: number) {
-	const firstTask = cron.schedule(`*/${delay} * * * * *`, () => {
-		console.log(`running a task every ${delay} seconds`);
+function cronJob() {
+	const task = cron.schedule(`*/3 * * * * *`, () => {
+		console.log("async task");
 	});
 
-	firstTask.start();
+	task.start();
 
-	setTimeout(
-		() => {
-			firstTask.stop();
-		},
-		reps * delay * 1000
-	);
+	setTimeout(() => {
+		task.stop();
+	}, 10000);
 }
 
-export { firstCronJob };
+export { cronJob };
