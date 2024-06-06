@@ -28,6 +28,7 @@ type userInDatabaseType = {
 	email: string;
 	password?: string;
 	timestamp: number;
+	tasks: taskType[];
 };
 
 type taskType = {

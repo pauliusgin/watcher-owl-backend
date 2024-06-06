@@ -2,7 +2,8 @@ import { User } from "../models/user.model.js";
 
 async function findUserInDatabase({ email }: userInDatabaseType) {
 	try {
-		const userIsInDatabase = await User.exists({ email });
+		const userIsInDatabase = await User.findOne({ email });
+		console.log("thisUser's tasks:", userIsInDatabase?.tasks);
 
 		return userIsInDatabase;
 	} catch (error) {
@@ -15,11 +16,12 @@ async function findUserInDatabase({ email }: userInDatabaseType) {
 async function addUserToDatabase(user: userInDatabaseType) {
 	try {
 		const userIsInDatabase = await findUserInDatabase(user);
-		if (userIsInDatabase) return `User ${user.email} is already registered.`;
+		if (userIsInDatabase) return `Request failed`;
 
 		const newUser = await User.create(user);
 
-		return `User ${newUser.email} added to database.`;
+		console.log(`User ${newUser.email} added to database.`);
+		return newUser._id;
 	} catch (error) {
 		if (error instanceof Error) {
 			console.log(error.message);

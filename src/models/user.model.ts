@@ -6,7 +6,7 @@ const userSchema = new mongoose.Schema({
 	timestamp: { type: Number, required: true },
 	tasks: [
 		{
-			title: { type: String, required: true, unique: true },
+			title: { type: String, required: true },
 			search: { type: [String], required: true },
 			timestamp: { type: Number, required: true },
 			isActive: { type: Boolean, required: true },
@@ -28,6 +28,8 @@ const userSchema = new mongoose.Schema({
 		},
 	],
 });
+
+userSchema.index({ email: 1, "tasks.title": 1 }, { unique: true });
 
 const User = mongoose.model("User", userSchema, "users");
 

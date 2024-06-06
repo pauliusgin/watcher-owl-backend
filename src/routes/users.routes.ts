@@ -17,6 +17,7 @@ users.post("/users", async (req, res) => {
 		email,
 		password,
 		timestamp: Date.now(),
+		tasks: [],
 	};
 
 	const addedUser = await addUserToDatabase(user);
