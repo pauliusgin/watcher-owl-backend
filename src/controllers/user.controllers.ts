@@ -1,49 +1,90 @@
-import { User } from "../models/user.model.js";
+import { hasOnlyExpressionInitializer } from "typescript";
+import { UserModel } from "../models/user.model.js";
+import { userInDatabaseType } from "../types/types.js";
 
-async function findUserInDatabase({ email }: userInDatabaseType) {
-	try {
-		const userIsInDatabase = await User.findOne({ email });
-		console.log("thisUser's tasks:", userIsInDatabase?.tasks);
+async function getUserId(email: string) {
+    try {
+        const userInDatabase = await UserModel.findOne({
+            email,
+        });
 
-		return userIsInDatabase;
-	} catch (error) {
-		if (error instanceof Error) {
-			console.log(error.message);
-		}
-	}
+        return userInDatabase?._id;
+    } catch (error) {
+        if (error instanceof Error) {
+            console.log(error.message);
+        }
+    }
+}
+
+async function findUserById(id: string) {
+    try {
+        const userIsInDatabase = await UserModel.findById(id);
+
+        return userIsInDatabase;
+    } catch (error) {
+        if (error instanceof Error) {
+            console.log(error.message);
+        }
+    }
 }
 
 async function addUserToDatabase(user: userInDatabaseType) {
-	try {
-		const userIsInDatabase = await findUserInDatabase(user);
-		if (userIsInDatabase) return `Request failed`;
+    try {
+        const existingUser = await findUserByEmail(user.email);
 
-		const newUser = await User.create(user);
+        if (existingUser) {
+            return existingUser;
+        }
 
-		console.log(`User ${newUser.email} added to database.`);
-		return newUser._id;
-	} catch (error) {
-		if (error instanceof Error) {
-			console.log(error.message);
-		}
-	}
+        const newUser = await UserModel.create({
+            ...user,
+            createdAt: new Date(),
+        });
+
+        return newUser;
+    } catch (error) {
+        if (error instanceof Error) {
+            console.log(error.message);
+        }
+    }
 }
 
-async function deleteUserFromDatabase(user: userInDatabaseType) {
-	try {
-		const userInDatabase = await findUserInDatabase(user);
-		if (!userInDatabase) return `User ${user.email} not found.`;
-
-		const deletedUser = await User.deleteOne({
-			email: user.email,
-		});
-		if (deletedUser.acknowledged)
-			return `Successfully deleted user ${user.email}.`;
-	} catch (error) {
-		if (error instanceof Error) {
-			console.log(error.message);
-		}
-	}
+async function findUserByEmail(email: string) {
+    try {
+        const userIsInDatabase = await UserModel.findOne({ email });
+        return userIsInDatabase;
+    } catch (error) {
+        if (error instanceof Error) {
+            console.log(error.message);
+        }
+    }
 }
 
-export { findUserInDatabase, addUserToDatabase, deleteUserFromDatabase };
+async function deleteUserFromDatabase(id: string) {
+    try {
+        await UserModel.deleteOne({ id });
+    } catch (error) {
+        if (error instanceof Error) {
+            console.log(error.message);
+        }
+    }
+}
+
+async function updateUser(userId: string, isLoggedIn: boolean) {
+    try {
+        await UserModel.updateOne({ _id: userId }, { isLoggedIn });
+    } catch (error) {
+        if (error instanceof Error) {
+            console.log(error.message);
+        }
+    }
+}
+
+export {
+    getUserId,
+    updateUser,
+    findUserById,
+    findUserByEmail,
+    addUserToDatabase,
+    deleteUserFromDatabase,
+};

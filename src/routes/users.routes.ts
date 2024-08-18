@@ -1,41 +1,34 @@
 import { Router } from "express";
 import {
-	addUserToDatabase,
-	deleteUserFromDatabase,
+    addUserToDatabase,
+    deleteUserFromDatabase,
+    updateUser,
 } from "../controllers/user.controllers.js";
 
 const users = Router();
 
 users.get("/users", async (_, res) => {
-	res.json("Health check for api/users");
+    res.json("Health check for api/users");
 });
 
 users.post("/users", async (req, res) => {
-	const { email, password } = req.body;
+    const _user = await addUserToDatabase(req.body);
 
-	const user = {
-		email,
-		password,
-		timestamp: Date.now(),
-		tasks: [],
-	};
-
-	const addedUser = await addUserToDatabase(user);
-
-	if (addedUser) res.json(addedUser);
+    res.status(200).send(_user);
 });
 
-users.patch("/users/:user", async (req, res) => {
-	const changesToUser = req.body;
-	res.json(`Received request for update: ${changesToUser}`);
+users.patch("/users/:id/", async (req, res) => {
+    await updateUser(req.params.id, req.body.isLoggedIn);
+
+    res.sendStatus(200);
 });
 
 users.delete("/users/", async (req, res) => {
-	const user = req.body;
+    const user = req.body;
 
-	const deletedUser = await deleteUserFromDatabase(user);
+    const deletedUser = await deleteUserFromDatabase(user);
 
-	if (deletedUser) res.json(deletedUser);
+    res.sendStatus(200);
 });
 
 export { users };

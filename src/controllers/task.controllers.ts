@@ -1,52 +1,68 @@
-import { User } from "../models/user.model.js";
+import { TaskModel } from "../models/task.model.js";
+import { taskType } from "../types/types.js";
 
-async function getUserTasks({ userEmail }: taskType) {
-	try {
-		const userTasks = await User.findOne({ email: userEmail });
+async function getTask(taskId: string) {
+    try {
+        const _task = await TaskModel.findById(taskId);
 
-		return userTasks;
-	} catch (error) {
-		if (error instanceof Error) {
-			console.log(error.message);
-		}
-	}
+        return _task;
+    } catch (error) {
+        if (error instanceof Error) {
+            console.log(error.message);
+        }
+    }
+}
+
+async function getUserTasks(userId: string) {
+    try {
+        const userTasks = await TaskModel.find({ userId });
+
+        return userTasks;
+    } catch (error) {
+        if (error instanceof Error) {
+            console.log(error.message);
+            return [];
+        }
+    }
 }
 
 async function addTaskToDatabase(task: taskType) {
-	try {
-		const user = await User.findOne({ email: task.userEmail });
+    try {
+        const _task = await TaskModel.create(task);
 
-		const taskExists = user?.tasks.find(
-			(taskInDatabase) => taskInDatabase.title === task.title
-		);
-
-		if (taskExists) return "Task already exists";
-
-		user?.tasks.addToSet(task);
-
-		await user?.save();
-
-		return user?.tasks;
-	} catch (error) {
-		if (error instanceof Error) {
-			console.log(error.message);
-		}
-	}
+        return _task;
+    } catch (error) {
+        if (error instanceof Error) {
+            console.log(error.message);
+        }
+    }
 }
 
-async function updateTaskInDatabase() {
-	console.log("update task in db");
+async function updateTaskInDatabase(task: taskType) {
+    try {
+        const updatedTask = await TaskModel.updateOne(task);
+
+        return updatedTask;
+    } catch (error) {
+        if (error instanceof Error) {
+            console.log(error.message);
+        }
+    }
 }
 
-async function deleteTaskFromDatabase(task: taskType) {
-	try {
-		// TODO here
-	} catch (error) {}
+async function deleteTaskFromDatabase(taskId: string) {
+    try {
+        await TaskModel.deleteOne({ where: { taskId } });
+    } catch (error) {
+        if (error instanceof Error) {
+            console.log(error.message);
+        }
+    }
 }
 
 export {
-	getUserTasks,
-	addTaskToDatabase,
-	updateTaskInDatabase,
-	deleteTaskFromDatabase,
+    getUserTasks,
+    addTaskToDatabase,
+    updateTaskInDatabase,
+    deleteTaskFromDatabase,
 };
