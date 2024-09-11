@@ -1,4 +1,4 @@
-async function cookieService(shop: string, cookie: string) {
+async function getCookie(shop: string, cookie: string) {
 	try {
 		const response = await fetch(shop, {});
 		const setCookie = response.headers.get("set-cookie");
@@ -18,4 +18,4 @@ async function cookieService(shop: string, cookie: string) {
 	}
 }
 
-export { cookieService };
+export { getCookie };

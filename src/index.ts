@@ -3,10 +3,10 @@ import { handleCors } from "./middleware/cors.middleware.js";
 import { rateLimiter } from "./middleware/rateLimiter.middleware.js";
 
 import { healthCheck } from "./routes/healthCheck.routes.js";
-import { history } from "./routes/history.routes.js";
 import { login } from "./routes/login.routes.js";
 import { users } from "./routes/users.routes.js";
-import { proxy } from "./routes/proxy.routes.js";
+import { tasks } from "./routes/tasks.routes.js";
+import { vinted } from "./routes/vinted.routes.js";
 
 const app = express();
 
@@ -17,9 +17,9 @@ app.use(
 
 app.use("/api", rateLimiter);
 app.use("/api", healthCheck);
-app.use("/api", history);
-app.use("/api", login);
-app.use("/api", users);
-app.use("/api", proxy);
+app.use("/api/v1", login);
+app.use("/api/v1", users);
+app.use("/api/v1", tasks);
+app.use("/api/v1", vinted);
 
 export { app };
