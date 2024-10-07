@@ -1,7 +1,7 @@
 import { TaskModel } from "../models/task.model.js";
 import { taskType } from "../types/types.js";
 
-async function getTask(taskId: string) {
+async function getTaskById(taskId: string) {
     try {
         const _task = await TaskModel.findById(taskId);
 
@@ -60,9 +60,26 @@ async function deleteTaskFromDatabase(taskId: string) {
     }
 }
 
+async function toggleTaskActivity(taskId: string, isActive: boolean) {
+    try {
+        const task = await TaskModel.findOneAndUpdate(
+            { _id: taskId },
+            { isActive }
+        );
+
+        return task;
+    } catch (error) {
+        if (error instanceof Error) {
+            console.log(error.message);
+        }
+    }
+}
+
 export {
     getUserTasks,
+    getTaskById,
     addTaskToDatabase,
     updateTaskInDatabase,
     deleteTaskFromDatabase,
+    toggleTaskActivity,
 };
