@@ -15,7 +15,7 @@ const retrievedItemSchema = new mongoose.Schema({
 const taskSchema = new mongoose.Schema({
     userId: { type: String, required: true },
     search: { type: String, required: true, unique: true },
-    isActive: { type: Boolean, required: true },
+    isActive: { type: Boolean, required: true, default: false },
     notification: { type: String, required: true },
     items: [retrievedItemSchema],
 });

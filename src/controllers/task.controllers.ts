@@ -1,7 +1,7 @@
 import { TaskModel } from "../models/task.model.js";
 import { taskType } from "../types/types.js";
 
-async function getTask(taskId: string) {
+async function getTaskById(taskId: string) {
     try {
         const _task = await TaskModel.findById(taskId);
 
@@ -38,11 +38,9 @@ async function addTaskToDatabase(task: taskType) {
     }
 }
 
-async function updateTaskInDatabase(task: taskType) {
+async function deleteTaskFromDatabase(taskId: string) {
     try {
-        const updatedTask = await TaskModel.updateOne(task);
-
-        return updatedTask;
+        await TaskModel.deleteOne({ _id: taskId });
     } catch (error) {
         if (error instanceof Error) {
             console.log(error.message);
@@ -50,9 +48,29 @@ async function updateTaskInDatabase(task: taskType) {
     }
 }
 
-async function deleteTaskFromDatabase(taskId: string) {
+async function toggleTaskActivity(taskId: string, isActive: boolean) {
     try {
-        await TaskModel.deleteOne({ where: { taskId } });
+        const task = await TaskModel.findOneAndUpdate(
+            { _id: taskId },
+            { isActive }
+        );
+
+        return task;
+    } catch (error) {
+        if (error instanceof Error) {
+            console.log(error.message);
+        }
+    }
+}
+
+async function selectNotificationMethod(taskId: string, notification: boolean) {
+    try {
+        const task = await TaskModel.findOneAndUpdate(
+            { _id: taskId },
+            { notification }
+        );
+
+        return task;
     } catch (error) {
         if (error instanceof Error) {
             console.log(error.message);
@@ -62,7 +80,9 @@ async function deleteTaskFromDatabase(taskId: string) {
 
 export {
     getUserTasks,
+    getTaskById,
     addTaskToDatabase,
-    updateTaskInDatabase,
     deleteTaskFromDatabase,
+    toggleTaskActivity,
+    selectNotificationMethod,
 };
