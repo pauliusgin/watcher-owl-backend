@@ -38,21 +38,9 @@ async function addTaskToDatabase(task: taskType) {
     }
 }
 
-async function updateTaskInDatabase(task: taskType) {
-    try {
-        const updatedTask = await TaskModel.updateOne(task);
-
-        return updatedTask;
-    } catch (error) {
-        if (error instanceof Error) {
-            console.log(error.message);
-        }
-    }
-}
-
 async function deleteTaskFromDatabase(taskId: string) {
     try {
-        await TaskModel.deleteOne({ where: { taskId } });
+        await TaskModel.deleteOne({ _id: taskId });
     } catch (error) {
         if (error instanceof Error) {
             console.log(error.message);
@@ -75,11 +63,26 @@ async function toggleTaskActivity(taskId: string, isActive: boolean) {
     }
 }
 
+async function selectNotificationMethod(taskId: string, notification: boolean) {
+    try {
+        const task = await TaskModel.findOneAndUpdate(
+            { _id: taskId },
+            { notification }
+        );
+
+        return task;
+    } catch (error) {
+        if (error instanceof Error) {
+            console.log(error.message);
+        }
+    }
+}
+
 export {
     getUserTasks,
     getTaskById,
     addTaskToDatabase,
-    updateTaskInDatabase,
     deleteTaskFromDatabase,
     toggleTaskActivity,
+    selectNotificationMethod,
 };
