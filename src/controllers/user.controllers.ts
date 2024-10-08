@@ -18,9 +18,7 @@ async function getUserId(email: string) {
 
 async function findUserById(id: string) {
     try {
-        const userIsInDatabase = await UserModel.findById(id);
-
-        return userIsInDatabase;
+        return await UserModel.findById(id);
     } catch (error) {
         if (error instanceof Error) {
             console.log(error.message);
