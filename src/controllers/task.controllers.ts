@@ -1,5 +1,5 @@
 import { TaskModel } from "../models/task.model.js";
-import { taskType } from "../types/types.js";
+import { retrievedItem, taskType } from "../types/types.js";
 
 async function getTaskById(taskId: string) {
     try {
@@ -36,6 +36,22 @@ async function addTaskToDatabase(task: taskType) {
             console.log(error.message);
         }
     }
+}
+
+async function updateTaskItems(taskId: string, items: retrievedItem[]) {
+    try {
+        const updatedTaskItems = await TaskModel.findOneAndUpdate(
+            {_id: taskId},
+            { items }
+        );
+        
+        return updatedTaskItems;
+    } catch (error) {
+        if (error instanceof Error) {
+            console.log(error.message);
+        
+    }
+}
 }
 
 async function deleteTaskFromDatabase(taskId: string) {
@@ -78,6 +94,12 @@ async function selectNotificationMethod(taskId: string, notification: boolean) {
     }
 }
 
+async function getActiveTasks() {
+    const activeTasks = await TaskModel.find({isActive: true})
+
+    return activeTasks
+}
+
 export {
     getUserTasks,
     getTaskById,
@@ -85,4 +107,6 @@ export {
     deleteTaskFromDatabase,
     toggleTaskActivity,
     selectNotificationMethod,
+    getActiveTasks,
+    updateTaskItems
 };

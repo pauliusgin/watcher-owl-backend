@@ -1,15 +1,34 @@
 import cron from "node-cron";
+import {
+    getActiveTasks,
+    updateTaskItems,
+} from "../controllers/task.controllers.js";
+import { vintedController } from "../controllers/vinted.controller.js";
 
-function cronJob() {
-	const task = cron.schedule(`*/3 * * * * *`, () => {
-		console.log("async task");
-	});
+function runActiveTasksCron() {
+    const cronJob = cron.schedule(`*/5 * * * * *`, async () => {
+        const activeTasks = await getActiveTasks();
 
-	task.start();
+        if (activeTasks.length > 0) {
+            for (const task of activeTasks) {
+                const searchQuery = task.search.split("+");
+                const vintedItems = await vintedController(searchQuery);
 
-	setTimeout(() => {
-		task.stop();
-	}, 10000);
+                if (vintedItems) {
+                    const tenNewest = vintedItems?.slice(0, 10);
+
+                    const newestSavedItem = task.items[0].id;
+                    const newestItemFromVinted = vintedItems[0].id;
+
+                    if (newestSavedItem !== newestItemFromVinted) {
+                        await updateTaskItems(task.id, tenNewest);
+                    }
+                }
+            }
+        }
+    });
+
+    cronJob.start();
 }
 
-export { cronJob };
+export { runActiveTasksCron };
