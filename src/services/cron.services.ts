@@ -9,7 +9,7 @@ import { Notification } from "../types/enums.js";
 import { findUserById } from "../controllers/user.controllers.js";
 
 function runActiveTasksCron() {
-    const cronJob = cron.schedule(`* */1 * * * *`, async () => {
+    const cronJob = cron.schedule(`*/10 * * * *`, async () => {
         const activeTasks = await getActiveTasks();
 
         if (activeTasks.length > 0) {
@@ -31,13 +31,33 @@ function runActiveTasksCron() {
                         if (task.notification === Notification.EMAIL) {
                             const user = await findUserById(task.userId);
 
-                            // TODO continue here
                             const newItemsHtml = newItems.map(item => `
-                                    <p><strong>Pavadinimas:</strong> ${item.title}</p><br/>
-                                    <p><strong>Kaina:</strong> ${item.price}</p><br/>
-                                    <p>Įkelta: </p>
-                                    <img src="${item.photo}" alt="${item.title}">
-                                    <hr/>
+                                   <div>
+                                    <table role="presentation" style="border-spacing: 0; background-color: #202124;">
+                                        <tr>
+                                        <td style="padding-right: 1rem; vertical-align: center;">
+                                            <a href="${item.full_size_url}" target="_blank">
+                                            <img src="${item.photo}" alt="${item.title}"/>
+                                            </a>
+                                        </td>
+                                        <td style="vertical-align: center; text-align: left;">
+                                            <a href="${item.url}" target="_blank">
+                                            <p style="color: #cc9419; font-weight: 600; text-decoration: underline; margin: 0;">${item.title}</p>
+                                            </a>
+                                            <p style="margin-top: 10px; color: #FFFFFF;">Kaina: ${item.price} ${item.currency}</p>
+                                            <p style="margin-top: 10px; color: #FFFFFF;">Būklė: ${item.status}</p>
+                                            <p style="margin-top: 10px; color: #FFFFFF;">Įkelta: ${new Date(item.timestamp * 1000).toLocaleString("lt-LT", {
+                                            year: "numeric",
+                                            month: "long",
+                                            day: "2-digit",
+                                            hour: "2-digit",
+                                            minute: "2-digit"
+                                            })}</p>
+                                        </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <hr />
                             `).join('');
 
                             if (user) {
@@ -46,9 +66,11 @@ function runActiveTasksCron() {
                                     subject: `Vinted: ${task.search.replaceAll( "+", ", ")}`,
                                     html: 
                                     `
-                                    <h3>Naujienos:</h3>
+                                    <div style="background-color: #202124; padding: 1rem;">
+                                    <h2 style="color: #FFFFFF;">Naujienos:</h2>
                                     <br/>
                                     ${newItemsHtml}
+                                    <div>
                                     `,
                                 });
                             }
