@@ -11,13 +11,13 @@ type vintedItemType = {
         thumbnails: urlType[];
         full_size_url: string;
         high_resolution: {
-            timestamp: string;
+            timestamp: number;
         };
     };
     price: number;
-    currency?: string;
+    currency: string;
     status: string;
-    url?: string;
+    url: string;
 };
 
 type vintedFullDataType = {
@@ -36,10 +36,10 @@ type userInDatabaseType = {
 };
 
 type retrievedItem = {
-    id: string;
+    id: number;
     title: string;
-    photo_thumbnail: string;
-    photo_full_size: string;
+    photo: string;
+    full_size_url: string;
     timestamp: number;
     price: number;
     currency: string;
