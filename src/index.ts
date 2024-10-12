@@ -12,7 +12,7 @@ const app = express();
 
 app.use(express.json());
 app.use(
-	handleCors(["https://watcher-owl.vercel.app", "http://localhost:1337"])
+	handleCors(["https://peleda.vercel.app", "http://localhost:1337"])
 );
 
 app.use("/api", rateLimiter);
