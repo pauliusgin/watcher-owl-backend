@@ -9,7 +9,7 @@ import { Notification } from "../types/enums.js";
 import { findUserById } from "../controllers/user.controllers.js";
 
 function runActiveTasksCron() {
-    const cronJob = cron.schedule(`* */10 * * * *`, async () => {
+    const cronJob = cron.schedule(`*/10 * * * * *`, async () => {
         const activeTasks = await getActiveTasks();
 
         if (activeTasks.length > 0) {
@@ -29,11 +29,12 @@ function runActiveTasksCron() {
                         const newItems = tenNewest.filter(newItem => !task.items.some(oldItem => oldItem.id === newItem.id))
 
                         if (task.notification === Notification.EMAIL) {
+                            
                             const user = await findUserById(task.userId);
-
+                            
                             const newItemsHtml = newItems.map(item => `
-                                   <div>
-                                    <table role="presentation" style="border-spacing: 0; background-color: #202124;">
+                                <div>
+                                <table role="presentation" style="border-spacing: 0; background-color: #202124;">
                                         <tr>
                                         <td style="padding-right: 1rem; vertical-align: center;">
                                             <a href="${item.full_size_url}" target="_blank">
@@ -52,15 +53,16 @@ function runActiveTasksCron() {
                                             day: "2-digit",
                                             hour: "2-digit",
                                             minute: "2-digit"
-                                            })}</p>
+                                        })}</p>
                                         </td>
                                         </tr>
                                     </table>
-                                </div>
-                                <hr />
-                            `).join('');
-
+                                    </div>
+                                    <hr />
+                                    `).join('');
+                                    
                             if (user) {
+                                    console.log("sending email to user: ", user.email)
                                 sendNotificationEmail({
                                     to: user.email,
                                     subject: `Vinted: ${task.search.replaceAll( "+", ", ")}`,
