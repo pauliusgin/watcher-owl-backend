@@ -1,4 +1,3 @@
-import { hasOnlyExpressionInitializer } from "typescript";
 import { UserModel } from "../models/user.model.js";
 import { userInDatabaseType } from "../types/types.js";
 
