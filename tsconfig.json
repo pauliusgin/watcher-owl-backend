@@ -6,15 +6,16 @@
     "compilerOptions": {
         "outDir": "./dist",
         "rootDir": "./",
+		"baseUrl": ".",
         "lib": ["es2023", "dom"],
-        "module": "node16",
+        "module": "esnext",
         "target": "es2022",
-
-        "strict": true,
+        "strict": false,
+		"declaration": true,
         "esModuleInterop": true,
         "skipLibCheck": true,
         "forceConsistentCasingInFileNames": true,
-        "moduleResolution": "node16",
+        "moduleResolution": "node",
         "resolveJsonModule": true,
         "types": [
             "node",
@@ -24,5 +25,7 @@
             "node-cron",
             "nodemailer"
         ]
-    }
+    },
+	"include": ["./src"],
+	"exclude": ["node_modules"]
 }
