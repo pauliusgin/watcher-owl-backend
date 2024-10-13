@@ -8,7 +8,7 @@
 		"watch": "tsc --watch",
 		"dev": "tsx watch src/server.ts",
 		"build": "rm -rf ./dist && tsc",
-		"start": "node dist/src/server.js"
+		"start": "node dist/server.js"
 	},
 	"author": "Paulius",
 	"license": "ISC",
