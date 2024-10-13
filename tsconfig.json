@@ -25,7 +25,7 @@
             "node-cron",
             "nodemailer"
         ],
-		"typeRoots" : ["./node_modules","./node_modules/@types"],
+		"typeRoots" : ["./node_modules/@types"],
     },
 	"include": ["./src"],
 	"exclude": ["node_modules"]
