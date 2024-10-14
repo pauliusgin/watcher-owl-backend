@@ -26,6 +26,4 @@
             "nodemailer"
         ],
     },
-	"include": ["./src", "./node_modules/@types"],
-	"exclude": ["node_modules"]
 }
