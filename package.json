@@ -7,8 +7,8 @@
 	"scripts": {
 		"watch": "tsc --watch",
 		"dev": "tsx watch src/server.ts",
-		"build": "rm -rf ./dist && tsc && tsc-alias",
-		"start": "node --max-old-space-size=4096 -- node_modules/ts-node/dist/bin -r tsconfig-paths/register src/server.ts"
+		"build": "rm -rf ./dist && tsc",
+		"start": "node dist/server.js"
 	},
 	"author": "Paulius",
 	"license": "ISC",

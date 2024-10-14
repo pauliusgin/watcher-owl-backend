@@ -6,18 +6,26 @@
     "compilerOptions": {
         "outDir": "./dist",
         "rootDir": "./src",
-        "baseUrl": ".",
+		"baseUrl": ".",
         "lib": ["es2023", "dom"],
-        "module": "commonjs",
-        "target": "esnext",
+        "module": "esnext",
+        "target": "es2022",
         "strict": false,
-        "declaration": true,
+		"declaration": true,
         "esModuleInterop": true,
         "skipLibCheck": true,
         "forceConsistentCasingInFileNames": true,
         "moduleResolution": "node",
-        "resolveJsonModule": true
+        "resolveJsonModule": true,
+        "types": [
+            "node",
+            "express",
+            "cors",
+            "jsonwebtoken",
+            "node-cron",
+            "nodemailer"
+        ]
     },
-    "include": ["./src"],
-    "exclude": ["node_modules"]
+	"include": ["./src"],
+	"exclude": ["node_modules"]
 }
