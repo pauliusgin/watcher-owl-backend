@@ -24,8 +24,8 @@
             "jsonwebtoken",
             "node-cron",
             "nodemailer"
-        ]
+        ],
     },
-	"include": ["./src"],
+	"include": ["./src", "./node_modules/@types"],
 	"exclude": ["node_modules"]
 }
