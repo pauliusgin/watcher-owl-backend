@@ -5,7 +5,7 @@
 
     "compilerOptions": {
         "outDir": "./dist",
-        "rootDir": "./src",
+        "rootDir": ".",
 		"baseUrl": ".",
         "lib": ["es2023", "dom"],
         "module": "esnext",
