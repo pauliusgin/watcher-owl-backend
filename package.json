@@ -7,7 +7,7 @@
 	"scripts": {
 		"watch": "tsc --watch",
 		"dev": "tsx watch src/server.ts",
-		"build": "rm -rf ./dist && tsc",
+		"build": "npm i && rm -rf ./dist && tsc",
 		"start": "node dist/server.js"
 	},
 	"author": "Paulius",
