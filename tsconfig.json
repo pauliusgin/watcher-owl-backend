@@ -8,8 +8,8 @@
         "rootDir": "./src",
 		"baseUrl": ".",
         "lib": ["es2023", "dom"],
-        "module": "esnext",
-        "target": "es2022",
+        "module": "commonjs",
+        "target": "esnext",
         "strict": false,
 		"declaration": true,
         "esModuleInterop": true,
@@ -24,8 +24,7 @@
             "jsonwebtoken",
             "node-cron",
             "nodemailer"
-        ],
-		"typeRoots" : ["./node_modules/@types"],
+        ]
     },
 	"include": ["./src"],
 	"exclude": ["node_modules"]
