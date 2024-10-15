@@ -40,18 +40,14 @@ async function addTaskToDatabase(task: taskType) {
 
 async function updateTaskItems(taskId: string, items: retrievedItem[]) {
     try {
-        const updatedTaskItems = await TaskModel.findOneAndUpdate(
-            {_id: taskId},
-            { items }
-        );
-        
-        return updatedTaskItems;
+        await TaskModel.findOneAndUpdate({ _id: taskId }, { items });
+
+        return;
     } catch (error) {
         if (error instanceof Error) {
             console.log(error.message);
-        
+        }
     }
-}
 }
 
 async function deleteTaskFromDatabase(taskId: string) {
@@ -95,9 +91,13 @@ async function selectNotificationMethod(taskId: string, notification: boolean) {
 }
 
 async function getActiveTasks() {
-    const activeTasks = await TaskModel.find({isActive: true})
+    const activeTasks = await TaskModel.find({ isActive: true });
 
-    return activeTasks
+    if (!activeTasks) {
+        return [];
+    }
+
+    return activeTasks;
 }
 
 export {
@@ -108,5 +108,5 @@ export {
     toggleTaskActivity,
     selectNotificationMethod,
     getActiveTasks,
-    updateTaskItems
+    updateTaskItems,
 };
