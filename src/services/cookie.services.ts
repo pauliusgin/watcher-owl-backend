@@ -1,21 +1,18 @@
-async function getCookie(shop: string, cookie: string) {
-	try {
-		const response = await fetch(shop, {});
-		const setCookie = response.headers.get("set-cookie");
+async function getCookie(shop: string) {
+    try {
+        const response = await fetch(shop, {});
+        const setCookie = response.headers.get("set-cookie");
 
-		if (!response.ok) {
-			console.log("Response error:", response.status);
-		}
+        if (!response.ok) {
+            console.log("Response error:", response.status);
+        }
 
-		if (setCookie) {
-			return setCookie
-				.replaceAll(",", ";")
-				.split(";")
-				.find((string) => string.includes(cookie));
-		}
-	} catch (error) {
-		console.log("Error:", error);
-	}
+        if (setCookie) {
+            return setCookie;
+        }
+    } catch (error) {
+        console.log("Error:", error);
+    }
 }
 
 export { getCookie };

@@ -6,8 +6,11 @@ const vinted = Router();
 vinted.post("/vinted", async (req, res) => {
 	const searchQuery = req.body;
 
+	console.log("searching for:", searchQuery)
+
 	try {
 		const items = await vintedController(searchQuery);
+		console.log("items coming back ---->", items)
 
 		res.status(200).send(JSON.stringify(items));
 	} catch (error) {

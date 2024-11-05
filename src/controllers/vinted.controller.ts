@@ -7,10 +7,9 @@ async function vintedController(searchQuery: string[]) {
     const vinted = "https://www.vinted.lt";
     const vintedCatalog =
         "https://www.vinted.lt/api/v2/catalog/items?page=1&per_page=50&search_text=";
-    const cookie = "_vinted_fr_session";
 
     try {
-        const authCookie = await getCookie(vinted, cookie);
+        const authCookie = await getCookie(vinted);
 
         if (authCookie) {
             const fullData = (await searchVintedCatalog(

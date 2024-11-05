@@ -23,6 +23,11 @@ function runActiveTasksCron() {
                     const newestSavedItem = task.items[0].id;
                     const newestItemFromVinted = vintedItems[0].id;
 
+                    console.log({
+                        newestItemInDB: newestSavedItem,
+                        newestFetchedItem: newestItemFromVinted,
+                    });
+
                     if (newestSavedItem !== newestItemFromVinted) {
                         await updateTaskItems(task.id, tenNewest);
 
