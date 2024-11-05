@@ -9,13 +9,19 @@ import { Notification } from "../types/enums.js";
 import { findUserById } from "../controllers/user.controllers.js";
 
 function runActiveTasksCron() {
-    const cronJob = cron.schedule(`* */10 * * * *`, async () => {
+    console.log("<- cron is online ->");
+    const cronJob = cron.schedule(`*/5 * * * * *`, async () => {
+        console.log("cronJob is running tasks...");
         const activeTasks = await getActiveTasks();
+        console.log("active tasks ------>", activeTasks);
 
         if (activeTasks.length > 0) {
+            console.log("we have this many active tasks:", activeTasks.length);
             for (const task of activeTasks) {
                 const searchQuery = task.search.split("+");
                 const vintedItems = await vintedController(searchQuery);
+
+                console.log("search query ----->", searchQuery);
 
                 if (vintedItems) {
                     const tenNewest = vintedItems?.slice(0, 10);
@@ -23,13 +29,15 @@ function runActiveTasksCron() {
                     const newestSavedItem = task.items[0].id;
                     const newestItemFromVinted = vintedItems[0].id;
 
-                    console.log({
-                        newestItemInDB: newestSavedItem,
-                        newestFetchedItem: newestItemFromVinted,
-                    });
-
                     if (newestSavedItem !== newestItemFromVinted) {
+                        console.log("newest saved item:", newestSavedItem);
+                        console.log(
+                            "newest item from Vinted:",
+                            newestItemFromVinted
+                        );
+                        console.log("updating task items...");
                         await updateTaskItems(task.id, tenNewest);
+                        console.log("task items updated");
 
                         const newItems = tenNewest.filter(
                             (newItem) =>
@@ -38,8 +46,21 @@ function runActiveTasksCron() {
                                 )
                         );
 
+                        console.log(
+                            "number of new items ----->",
+                            newItems.length
+                        );
+                        newItems.forEach((item) =>
+                            console.log("new item:", item.id, item.title)
+                        );
+
                         if (task.notification === Notification.EMAIL) {
                             const user = await findUserById(task.userId);
+
+                            console.log(
+                                "owner of the task user's email ----->",
+                                user.email
+                            );
 
                             const newItemsHtml = newItems
                                 .map(
@@ -95,7 +116,10 @@ function runActiveTasksCron() {
                                 );
                                 sendNotificationEmail({
                                     to: user.email,
-                                    subject: `Vinted: ${task.search.replaceAll( "+", ", ")}`,
+                                    subject: `Vinted: ${task.search.replaceAll(
+                                        "+",
+                                        ", "
+                                    )}`,
                                     html: `
                                     <div style="background-color: #202124; padding: 1rem;">
                                     <h2 style="color: #FFFFFF;">Naujienos:</h2>
@@ -104,6 +128,7 @@ function runActiveTasksCron() {
                                     <div>
                                     `,
                                 });
+                                console.log("email sent to:", user.email);
                             }
                         }
                     }
