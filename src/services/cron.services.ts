@@ -10,7 +10,7 @@ import { findUserById } from "../controllers/user.controllers.js";
 
 function runActiveTasksCron() {
     console.log("<- cron is online ->");
-    const cronJob = cron.schedule(`* */10 * * * *`, async () => {
+    const cronJob = cron.schedule(`0 */10 * * * *`, async () => {
         console.log("cronJob is running tasks...");
         const activeTasks = await getActiveTasks();
         console.log("active tasks ------>", activeTasks);
