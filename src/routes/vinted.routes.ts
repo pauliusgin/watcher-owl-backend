@@ -4,21 +4,17 @@ import { vintedController } from "../controllers/vinted.controller.js";
 const vinted = Router();
 
 vinted.post("/vinted", async (req, res) => {
-	const searchQuery = req.body;
+    const searchQuery = req.body;
 
-	console.log("searching for:", searchQuery)
+    try {
+        const items = await vintedController(searchQuery);
 
-	try {
-		const items = await vintedController(searchQuery);
-		console.log("items coming back ---->", items)
-
-		res.status(200).send(JSON.stringify(items));
-	} catch (error) {
-		if (error instanceof Error) {
-			console.log("Error while receiving the data:", error.message);
-			res.status(400).json(`Error: ${error.message}`);
-		}
-	}
+        res.status(200).send(JSON.stringify(items));
+    } catch (error) {
+        if (error instanceof Error) {
+            res.status(400).json(`Error: ${error.message}`);
+        }
+    }
 });
 
 export { vinted };
