@@ -9,19 +9,14 @@ import { Notification } from "../types/enums.js";
 import { findUserById } from "../controllers/user.controllers.js";
 
 function runActiveTasksCron() {
-    console.log("<- cron is online ->");
+    console.log("cron is online");
     const cronJob = cron.schedule(`0 */10 * * * *`, async () => {
-        console.log("cronJob is running tasks...");
         const activeTasks = await getActiveTasks();
-        console.log("active tasks ------>", activeTasks);
 
         if (activeTasks.length > 0) {
-            console.log("we have this many active tasks:", activeTasks.length);
             for (const task of activeTasks) {
                 const searchQuery = task.search.split("+");
                 const vintedItems = await vintedController(searchQuery);
-
-                console.log("search query ----->", searchQuery);
 
                 if (vintedItems) {
                     const tenNewest = vintedItems?.slice(0, 10);
@@ -30,14 +25,7 @@ function runActiveTasksCron() {
                     const newestItemFromVinted = vintedItems[0].id;
 
                     if (newestSavedItem !== newestItemFromVinted) {
-                        console.log("newest saved item:", newestSavedItem);
-                        console.log(
-                            "newest item from Vinted:",
-                            newestItemFromVinted
-                        );
-                        console.log("updating task items...");
                         await updateTaskItems(task.id, tenNewest);
-                        console.log("task items updated");
 
                         const newItems = tenNewest.filter(
                             (newItem) =>
@@ -46,21 +34,8 @@ function runActiveTasksCron() {
                                 )
                         );
 
-                        console.log(
-                            "number of new items ----->",
-                            newItems.length
-                        );
-                        newItems.forEach((item) =>
-                            console.log("new item:", item.id, item.title)
-                        );
-
                         if (task.notification === Notification.EMAIL) {
                             const user = await findUserById(task.userId);
-
-                            console.log(
-                                "owner of the task user's email ----->",
-                                user.email
-                            );
 
                             const newItemsHtml = newItems
                                 .map(
@@ -68,16 +43,16 @@ function runActiveTasksCron() {
                                 <div>
                                 <table role="presentation" style="border-spacing: 0; background-color: #202124;">
                                         <tr>
-                                        <td style="padding-right: 1rem; vertical-align: center;">
+                                        <td vertical-align: center;">
                                             <a href="${
                                                 item.full_size_url
                                             }" target="_blank">
                                             <img src="${item.photo}" alt="${
                                         item.title
-                                    }"/>
+                                    }" style="border-radius: 10px;"/>
                                             </a>
                                         </td>
-                                        <td style="vertical-align: center; text-align: left;">
+                                        <td style="vertical-align: center; text-align: left; padding-left: 1rem;">
                                             <a href="${
                                                 item.url
                                             }" target="_blank">
@@ -110,10 +85,6 @@ function runActiveTasksCron() {
                                 .join("");
 
                             if (user) {
-                                console.log(
-                                    "sending email to user: ",
-                                    user.email
-                                );
                                 sendNotificationEmail({
                                     to: user.email,
                                     subject: `Vinted: ${task.search.replaceAll(
@@ -128,7 +99,6 @@ function runActiveTasksCron() {
                                     <div>
                                     `,
                                 });
-                                console.log("email sent to:", user.email);
                             }
                         }
                     }
