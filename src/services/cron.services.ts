@@ -9,7 +9,7 @@ import { Notification } from "../types/enums.js";
 import { findUserById } from "../controllers/user.controllers.js";
 
 function runActiveTasksCron() {
-    console.log("cron is online");
+    console.log("=> Cron is running.");
     const cronJob = cron.schedule(`0 */10 * * * *`, async () => {
         const activeTasks = await getActiveTasks();
 

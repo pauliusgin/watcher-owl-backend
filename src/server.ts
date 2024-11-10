@@ -9,5 +9,5 @@ connectToMongoDB();
 runActiveTasksCron();
 
 app.listen(PORT, () => {
-	console.log(`\nServer is listening on port ${PORT}.\n`);
+	console.log(`\n=> Server is listening on port ${PORT}.\n`);
 });
