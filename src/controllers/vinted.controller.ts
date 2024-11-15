@@ -17,9 +17,9 @@ async function vintedController(searchQuery: string[]) {
                 authCookie,
                 searchQuery
             )) as vintedFullDataType;
-
+        
             const items = handleVintedData(fullData);
-
+            
             return items;
         }
     } catch (error) {

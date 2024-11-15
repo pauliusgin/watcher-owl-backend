@@ -40,7 +40,7 @@ users.patch("/users/:id/", authenticateUser, async (req, res) => {
 users.delete("/users/", authenticateUser, async (req, res) => {
     const user = req.body;
 
-    const deletedUser = await deleteUserFromDatabase(user);
+    await deleteUserFromDatabase(user);
 
     res.sendStatus(200);
 });

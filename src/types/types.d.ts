@@ -14,8 +14,10 @@ type vintedItemType = {
             timestamp: number;
         };
     };
-    price: number;
-    currency: string;
+    price: {
+        amount: number;
+        currency_code: string;
+    };
     status: string;
     url: string;
 };

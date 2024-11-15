@@ -7,8 +7,8 @@ function handleVintedData(data: vintedFullDataType) {
         photo: item.photo.thumbnails[0].url,
         full_size_url: item.photo.full_size_url,
         timestamp: item.photo.high_resolution.timestamp,
-        price: Number(item.price),
-        currency: item.currency,
+        price: Number(item.price.amount),
+        currency: item.price.currency_code,
         status: item.status,
         url: item.url,
     }));
